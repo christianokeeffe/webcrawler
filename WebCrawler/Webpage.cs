@@ -18,13 +18,12 @@ namespace WebCrawler
         {
         }
 
-        public webPage(Uri inputUrl, List<robotRestriction> inputList, int inputHash, int visited, int delay)
+        public webPage(Uri inputUrl)
         {
             baseUrl = inputUrl;
-            restrictions = inputList;
-            hashValue = inputHash;
-            lastVisited = visited;
-            delayValue = delay;
+            hashValue = inputUrl.GetHashCode();
+            lastVisited = 0;
+            delayValue = 2;
         }
     }
 }
