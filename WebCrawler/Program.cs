@@ -18,6 +18,11 @@ namespace WebCrawler
             Console.ReadKey();
         }
 
+        private static List<robotRestriction> checkAndGetRobotFile(Uri webPage, string botName)
+        {
+            return null;
+        }
+
         private static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName, List<webPageDelays> webDelays)
         {
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
