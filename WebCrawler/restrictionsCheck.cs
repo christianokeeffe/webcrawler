@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,7 +34,7 @@ namespace WebCrawler
         }
 
 
-        public static List<webPage> checkAndGetRobotFile(Uri inputPage, string botName, List<webPage> allWebpages)
+        public List<webPage> checkAndGetRobotFile(Uri inputPage, string botName, List<webPage> allWebpages)
         {
             bool visited = false;
             int i = 0;
@@ -48,7 +48,8 @@ namespace WebCrawler
             if (!visited)
             {
                 webPage tempPage = new webPage(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")));
-                getRobotsRestrictions(botName, tempPage);
+                tempPage = getRobotsRestrictions(botName, tempPage);
+                allWebpages.Add(tempPage);
             }
             return allWebpages;
         }

@@ -26,25 +26,25 @@ namespace WebCrawler
             List<string> pageContents = new List<string>();
             restrictionsCheck restrictionsChecker = new restrictionsCheck();
             nearMatch matchCheck = new nearMatch();
+            List<webPage> webpages = new List<webPage>();
             while (pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
-                string siteContent = crawlSite(botName, URL, restrictions, restrictionsChecker);
+                string siteContent = crawlSite(botName, URL, restrictions, restrictionsChecker, webpages);
                 if(siteContent == null)
                 {
                     listOfPages.Enqueue(URL);
                 }
                 else
                 {
-                    
                     pageContents.Add(siteContent);
                 }
             }
         }
 
-        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker)
+        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker, List<webPage> webpages)
         {
-            //restrictions = restrictionsChecker.checkAndGetRobotFile(webPage, botName, restrictions);
+            restrictionsChecker.checkAndGetRobotFile(webPage, botName, webpages);
             //check delay
             //check permission
             //crawl
@@ -82,31 +82,6 @@ namespace WebCrawler
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
             int hashCode = domainName.GetHashCode();
             return hashCode;
-        }
-
-        private int time()
-        {
-            int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            return unixTimestamp;
-        }
-
-        private bool canVisit(Uri webPage, List<webPage> webDelays)
-        {
-            int domainHash = convertUriToHash(webPage);
-
-                foreach(webPage test in webDelays) {
-                    if (test.hashValue == domainHash)
-                    {
-                        if (test.lastVisited - time() > test.delayValue)
-                        {
-                            test.lastVisited = time();
-                            return true;
-                        }
-                        else
-                            return false;
-                    }
-            }
-                return false;
         }
     }
 }
