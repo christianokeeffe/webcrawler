@@ -24,6 +24,7 @@ namespace WebCrawler
             List<robotRestriction> restrictions = new List<robotRestriction>();
             List<string> pageContents = new List<string>();
             restrictionsCheck restrictionsChecker = new restrictionsCheck();
+            nearMatch matchCheck = new nearMatch();
             while (pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
@@ -34,6 +35,7 @@ namespace WebCrawler
                 }
                 else
                 {
+                    
                     pageContents.Add(siteContent);
                 }
             }

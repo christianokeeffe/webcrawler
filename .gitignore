@@ -149,3 +149,6 @@ UpgradeLog*.htm
 *.bim_*.settings
 # Microsoft Fakes
 FakesAssemblies/
+/packages/HtmlAgilityPack.1.4.8/lib
+/packages/HtmlAgilityPack.1.4.8/HAPIcon.png
+/packages/HtmlAgilityPack.1.4.8/readme.txt
