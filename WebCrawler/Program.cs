@@ -23,6 +23,26 @@ namespace WebCrawler
             return null;
         }
 
+        private static void crawlWebSites(Queue<Uri> listOfPages, string botName)
+        {
+            List<robotRestriction> restrictions = new List<robotRestriction>();
+            List<string> pageContents = new List<string>();
+            while(pageContents.Count < 1000 && listOfPages.Count != 0)
+            {
+                Uri URL = listOfPages.Dequeue();
+                crawlSite(botName, URL, restrictions);
+            }
+        }
+
+        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions)
+        {
+            restrictions = checkAndGetRobotFile(webPage, botName);
+            //check delay
+            //check permission
+            //crawl
+            return null;
+        }
+
         private static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName, List<webPageDelays> webDelays)
         {
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
