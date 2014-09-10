@@ -24,21 +24,26 @@ namespace WebCrawler
             List<robotRestriction> restrictions = new List<robotRestriction>();
             List<string> pageContents = new List<string>();
             restrictionsCheck restrictionsChecker = new restrictionsCheck();
-            while(pageContents.Count < 1000 && listOfPages.Count != 0)
+            while (pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
-                crawlSite(botName, URL, restrictions);
+                crawlSite(botName, URL, restrictions, restrictionsChecker);
             }
         }
 
-        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions)
+        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker)
         {
-            restrictions = checkAndGetRobotFile(webPage, botName, restrictions);
+            restrictions = restrictionsChecker.checkAndGetRobotFile(webPage, botName, restrictions);
             //check delay
             //check permission
             //crawl
             return null;
         }
+        /*
+        private static string getPageContent(Uri webpage)
+        {
+
+        }*/
 
 
         private static List<string> getLinksFromUrl(Uri webpage)

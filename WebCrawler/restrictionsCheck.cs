@@ -61,6 +61,7 @@ namespace WebCrawler
             bool hasSpecificRules = false;
             bool isRelevant = true;
             botName = botName.ToLower();
+            webDelays.Add(new webPageDelays(domainHash, 2));
 
             while (reader.Peek() >= 0)
             {
@@ -139,7 +140,6 @@ namespace WebCrawler
                         {
                             webDelays.Add(new webPageDelays(domainHash, int.Parse(str)));
                         }
-                        robList.Add(new robotRestriction("delay", new Uri(str)));
                     }
                 }
             }
