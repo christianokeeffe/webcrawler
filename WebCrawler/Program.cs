@@ -27,13 +27,21 @@ namespace WebCrawler
             while (pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
-                crawlSite(botName, URL, restrictions, restrictionsChecker);
+                string siteContent = crawlSite(botName, URL, restrictions, restrictionsChecker);
+                if(siteContent == null)
+                {
+                    listOfPages.Enqueue(URL);
+                }
+                else
+                {
+                    pageContents.Add(siteContent);
+                }
             }
         }
 
         private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker)
         {
-            restrictions = restrictionsChecker.checkAndGetRobotFile(webPage, botName, restrictions);
+            //restrictions = restrictionsChecker.checkAndGetRobotFile(webPage, botName, restrictions);
             //check delay
             //check permission
             //crawl

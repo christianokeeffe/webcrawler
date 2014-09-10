@@ -13,3 +13,6 @@ C:\Users\Mette\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.csprojRes
 C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\bin\Debug\WebCrawler.exe.config
 C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.exe
 C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.pdb
+C:\Users\Christian\Source\Repos\webcrawler\WebCrawler\bin\Debug\WebCrawler.exe.config
+C:\Users\Christian\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.exe
+C:\Users\Christian\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.pdb
