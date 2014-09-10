@@ -12,13 +12,15 @@ namespace WebCrawler
     {
         static void Main(string[] args)
         {
-
+            
             Console.ReadKey();
         }
 
-        private static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName)
+        private static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName, List<webPageDelays> webDelays)
         {
-            string robotFile = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "") + "/robots.txt";
+            string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
+            string robotFile = domainName +"/robots.txt";
+            int domainHash = domainName.GetHashCode();
             List<robotRestriction> robList = new List<robotRestriction>();
             WebClient client = new WebClient();
             Stream stream = client.OpenRead(robotFile);
@@ -90,12 +92,47 @@ namespace WebCrawler
                     {
                         str = str.Substring("crawl-delay:".Length);
                         str = str.Trim();
+                        int i = 0;
+                        while (i < webDelays.Count && webDelays[i].hashValue != domainHash)
+                        {
+                            i++;
+                        }
+                        if(i < webDelays.Count)
+                        {
+                            webDelays[i].delayValue = int.Parse(str) ;
+                        }
+                        else
+                        {
+                            webDelays.Add(new webPageDelays(domainHash, int.Parse(str)));
+                        }
                         robList.Add(new robotRestriction("delay", str));
                     }
                 }
             }
 
             return robList;
+        }
+
+        private int convertUriToHash(Uri webPage, string append)
+        {
+            string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
+            if (append != "")
+            {
+
+            }
+            int hashCode = domainName.GetHashCode();
+            return hashCode;
+        }
+
+        private bool sendDelay(Uri webPage, List<webPageDelays> webDelays)
+        {
+            if(webDelays.Count > 0) {
+                foreach(webPageDelays test in webDelays) {
+
+                }
+
+            }
+            return true;
         }
     }
 }
