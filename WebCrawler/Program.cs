@@ -14,7 +14,8 @@ namespace WebCrawler
         static void Main(string[] args)
         {
             Uri webpage = new Uri("http://tv2.dk");
-            getLinksFromUrl(webpage);
+            string test = getPageContent(webpage);
+            getLinksFromString(test);
             Console.ReadKey();
         }
 
@@ -49,18 +50,21 @@ namespace WebCrawler
             //crawl
             return null;
         }
-        /*
+        
         private static string getPageContent(Uri webpage)
         {
-
-        }*/
-
-
-        private static List<string> getLinksFromUrl(Uri webpage)
-        {
-            List<string> Links = new List<string>();
             HtmlWeb hw = new HtmlWeb();
             HtmlDocument doc = hw.Load((webpage.ToString()));
+            string htmlString = doc.DocumentNode.InnerHtml;
+            return htmlString;
+        }
+
+
+        private static List<string> getLinksFromString(string htmlString)
+        {
+            HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(htmlString);
+            List<string> Links = new List<string>();
             foreach(HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]").Distinct())
             {
                 string href = link.Attributes["href"].Value;
