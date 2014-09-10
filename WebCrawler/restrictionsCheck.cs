@@ -37,14 +37,20 @@ namespace WebCrawler
         public static List<webpage> checkAndGetRobotFile(Uri inputPage, string botName, List<webpage> allWebpages)
         {
             bool visited = false;
-            foreach (webpage page in allWebpages)
+            int i = 0;
+            while (visited == false && i < allWebpages.Count)
             {
-                if (page.baseUrl == new Uri (inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")))
+                if (allWebpages[i].baseUrl == new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")))
                 {
-
+                    visited = true;
                 }
             }
-            return null;
+            if (!visited)
+            {
+//                webpage tempPage = new webpage(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")), getRobotsRestrictions(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")), botName));
+//                allWebpages.Add(tempPage);
+            }
+            return allWebpages;
         }
 
         public static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName, List<webPageDelays> webDelays)
