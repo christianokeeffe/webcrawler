@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="restrictionsCheck.cs" />
     <Compile Include="Webpage.cs" />
     <Compile Include="webPageDelays.cs" />
     <Compile Include="Program.cs" />
