@@ -9,12 +9,13 @@ namespace WebCrawler
     class robotRestriction
     {
         public string type;
-        public string url;
+        public Uri url;
         public robotRestriction()
         {
+
         }
 
-        public robotRestriction(string inputType, string inputUrl)
+        public robotRestriction(string inputType, Uri inputUrl)
         {
             type = inputType;
             url = inputUrl;

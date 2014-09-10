@@ -18,7 +18,7 @@ namespace WebCrawler
             Console.ReadKey();
         }
 
-        private static List<robotRestriction> checkAndGetRobotFile(Uri webPage, string botName)
+        private static List<robotRestriction> checkAndGetRobotFile(Uri webPage, string botName, List<robotRestriction> restrictions)
         {
             return null;
         }
@@ -75,25 +75,25 @@ namespace WebCrawler
                     {
                         str = str.Substring("allow:".Length);
                         str = str.Trim();
-                        robList.Add(new robotRestriction("allow",str));
+                        robList.Add(new robotRestriction("allow", new Uri(str)));
                     }
                     if (str.StartsWith("allowed"))
                     {
                         str = str.Substring("allowed:".Length);
                         str = str.Trim();
-                        robList.Add(new robotRestriction("allow", str));
+                        robList.Add(new robotRestriction("allow", new Uri(str)));
                     }
                     if (str.StartsWith("disallow"))
                     {
                         str = str.Substring("disallow:".Length);
                         str = str.Trim();
-                        robList.Add(new robotRestriction("disallow", str));
+                        robList.Add(new robotRestriction("disallow", new Uri(str)));
                     }
                     if (str.StartsWith("disallow"))
                     {
                         str = str.Substring("disallow:".Length);
                         str = str.Trim();
-                        robList.Add(new robotRestriction("disallow", str));
+                        robList.Add(new robotRestriction("disallow", new Uri(str)));
                     }
                     if (str.StartsWith("crawl-delay"))
                     {
@@ -112,7 +112,7 @@ namespace WebCrawler
                         {
                             webDelays.Add(new webPageDelays(domainHash, int.Parse(str)));
                         }
-                        robList.Add(new robotRestriction("delay", str));
+                        robList.Add(new robotRestriction("delay", new Uri(str)));
                     }
                 }
             }
@@ -142,14 +142,14 @@ namespace WebCrawler
             {
                 if(restrict.type == "disallow")
                 {
-                    if (webpage.ToString().Contains(restrict.url))
+                    if (webpage.ToString().Contains(restrict.url.ToString()))
                     {
                         return false;
                     }
                 }
                 else if(restrict.type == "allow")
                 {
-                    if (webpage.ToString().Contains(restrict.url))
+                    if (webpage.ToString().Contains(restrict.url.ToString()))
                     {
                         return true;
                     }
