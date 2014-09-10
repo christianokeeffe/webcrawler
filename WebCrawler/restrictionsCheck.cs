@@ -48,17 +48,21 @@ namespace WebCrawler
             }
             if (!visited)
             {
-                webPage tempPage = new webPage(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")));
-                tempPage = getRobotsRestrictions(botName, tempPage);
-                allWebpages.Add(tempPage);
-                CurrentWebPage = tempPage;
+                string url = inputPage.AbsoluteUri;
+                if (inputPage.AbsolutePath != "/")
+                {
+                    inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "");
+                }
+                CurrentWebPage.baseUrl = inputPage;
+                CurrentWebPage = getRobotsRestrictions(botName, CurrentWebPage);
+                allWebpages.Add(CurrentWebPage);
             }
             return allWebpages;
         }
 
         public static webPage getRobotsRestrictions(string botName, webPage thisWebpage)
         {
-            string robotFile = thisWebpage.baseUrl + "/robots.txt";
+            string robotFile = thisWebpage.baseUrl.ToString().TrimEnd('/') + "/robots.txt";
             List<robotRestriction> robList = new List<robotRestriction>();
             WebClient client = new WebClient();
             Stream stream = client.OpenRead(robotFile);
@@ -151,7 +155,7 @@ namespace WebCrawler
 
       public bool canVisit(webPage webDelays)
         {
-            if (webDelays.lastVisited - time() >= webDelays.delayValue)
+            if (time() - webDelays.lastVisited >= webDelays.delayValue)
             {
                 webDelays.lastVisited = time();
                 return true;

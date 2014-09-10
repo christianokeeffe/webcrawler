@@ -14,7 +14,7 @@ namespace WebCrawler
         static void Main(string[] args)
         {
             Queue<Uri> listOfPages = new Queue<Uri>();
-            listOfPages.Enqueue(new Uri("http://aau.dk"));
+            listOfPages.Enqueue(new Uri("http://www.aau.dk/"));
             crawlWebSites(listOfPages, "OKEEFFE");
             Console.ReadKey();
         }
@@ -49,7 +49,7 @@ namespace WebCrawler
 
         private static string crawlSite(string botName, Uri webPageUrl, restrictionsCheck restrictionsChecker, List<webPage> webpages, Queue<Uri> toVisit)
         {
-            webPage tempPage = null;
+            webPage tempPage = new webPage();
             webpages = restrictionsChecker.checkAndGetRobotFile(webPageUrl, botName, webpages, tempPage);
 
             if (restrictionsChecker.canVisit(tempPage))
@@ -61,7 +61,12 @@ namespace WebCrawler
                     List<string> stringsToAdd = getLinksFromString(returnValue);
                     foreach(string s in stringsToAdd)
                     {
-                        toVisit.Enqueue(new Uri(s));
+                        string temp = s;
+                        if(!s.StartsWith("http"))
+                        {
+                            temp = tempPage.baseUrl + s;
+                        }
+                        toVisit.Enqueue(new Uri(temp));
                     }
                     return returnValue;
                 }
