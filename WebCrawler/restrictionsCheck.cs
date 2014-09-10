@@ -33,6 +33,12 @@ namespace WebCrawler
             return true;
         }
 
+
+        private static List<robotRestriction> checkAndGetRobotFile(Uri webPage, string botName, List<robotRestriction> restrictions)
+        {
+            return null;
+        }
+
         private static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName, List<webPageDelays> webDelays)
         {
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");

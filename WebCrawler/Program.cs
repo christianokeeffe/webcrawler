@@ -18,15 +18,12 @@ namespace WebCrawler
             Console.ReadKey();
         }
 
-        private static List<robotRestriction> checkAndGetRobotFile(Uri webPage, string botName, List<robotRestriction> restrictions)
-        {
-            return null;
-        }
 
         private static void crawlWebSites(Queue<Uri> listOfPages, string botName)
         {
             List<robotRestriction> restrictions = new List<robotRestriction>();
             List<string> pageContents = new List<string>();
+            restrictionsCheck restrictionsChecker = new restrictionsCheck();
             while(pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
