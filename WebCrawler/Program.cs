@@ -136,32 +136,28 @@ namespace WebCrawler
             return Links;
         }
 
-        //private static bool isAllowed(List<robotRestriction> restrictions, Uri webpage)
-        //{
-        //    foreach (robotRestriction restrict in restrictions)
-        //    {
-        //        if(restrict.type == "disallow")
-        //        {
-        //            if (webpage)
-        //            {
+        private static bool isAllowed(List<robotRestriction> restrictions, Uri webpage)
+        {
+            foreach (robotRestriction restrict in restrictions)
+            {
+                if(restrict.type == "disallow")
+                {
+                    if (webpage.ToString().Contains(restrict.url))
+                    {
+                        return false;
+                    }
+                }
+                else if(restrict.type == "allow")
+                {
+                    if (webpage.ToString().Contains(restrict.url))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return true;
+        }
 
-        //            }
-        //            else
-        //            {
-
-        //            }
-        //        }
-        //        else if()
-        //        {
-
-        //        }
-        //        else
-        //        {
-
-        //        }
-        //    }
-        //    return true;
-        //}
         private int convertUriToHash(Uri webPage, string append)
         {
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
