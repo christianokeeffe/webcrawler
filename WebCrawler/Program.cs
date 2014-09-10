@@ -79,30 +79,5 @@ namespace WebCrawler
             int hashCode = domainName.GetHashCode();
             return hashCode;
         }
-
-        private int time()
-        {
-            int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            return unixTimestamp;
-        }
-
-        private bool canVisit(Uri webPage, List<webPage> webDelays)
-        {
-            int domainHash = convertUriToHash(webPage);
-
-                foreach(webPage test in webDelays) {
-                    if (test.hashValue == domainHash)
-                    {
-                        if (test.lastVisited - time() > test.delayValue)
-                        {
-                            test.lastVisited = time();
-                            return true;
-                        }
-                        else
-                            return false;
-                    }
-            }
-                return false;
-        }
     }
 }

@@ -53,7 +53,23 @@ namespace WebCrawler
             return allWebpages;
         }
 
-        public static webpage getRobotsRestrictions(string botName, webpage thisWebpage)
+        private int time()
+        {
+            int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            return unixTimestamp;
+        }
+
+        private bool canVisit(webPage webDelays)
+        {
+            if (webDelays.lastVisited - time() >= webDelays.delayValue)
+            {
+                webDelays.lastVisited = time();
+                return true;
+            }
+            return false;
+        }
+
+        public static webPage getRobotsRestrictions(string botName, webPage thisWebpage)
         {
             string robotFile = thisWebpage.baseUrl + "/robots.txt";
             List<robotRestriction> robList = new List<robotRestriction>();
