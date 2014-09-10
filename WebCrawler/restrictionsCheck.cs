@@ -34,7 +34,7 @@ namespace WebCrawler
         }
 
 
-        public static List<webpage> checkAndGetRobotFile(Uri inputPage, string botName, List<webpage> allWebpages)
+        public static List<webPage> checkAndGetRobotFile(Uri inputPage, string botName, List<webPage> allWebpages)
         {
             bool visited = false;
             int i = 0;
@@ -53,11 +53,9 @@ namespace WebCrawler
             return allWebpages;
         }
 
-        public static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName, List<webPageDelays> webDelays)
+        public static webpage getRobotsRestrictions(string botName, webpage thisWebpage)
         {
-            string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
-            string robotFile = domainName + "/robots.txt";
-            int domainHash = domainName.GetHashCode();
+            string robotFile = thisWebpage.baseUrl + "/robots.txt";
             List<robotRestriction> robList = new List<robotRestriction>();
             WebClient client = new WebClient();
             Stream stream = client.OpenRead(robotFile);
@@ -67,6 +65,7 @@ namespace WebCrawler
             bool hasSpecificRules = false;
             bool isRelevant = true;
             botName = botName.ToLower();
+            thisWebpage.delayValue = 2;
 
             while (reader.Peek() >= 0)
             {
@@ -132,25 +131,14 @@ namespace WebCrawler
                     {
                         str = str.Substring("crawl-delay:".Length);
                         str = str.Trim();
-                        int i = 0;
-                        while (i < webDelays.Count && webDelays[i].hashValue != domainHash)
-                        {
-                            i++;
-                        }
-                        if (i < webDelays.Count)
-                        {
-                            webDelays[i].delayValue = int.Parse(str);
-                        }
-                        else
-                        {
-                            webDelays.Add(new webPageDelays(domainHash, int.Parse(str)));
-                        }
-                        robList.Add(new robotRestriction("delay", new Uri(str)));
+                        thisWebpage.delayValue = int.Parse(str);
                     }
                 }
             }
 
-            return robList;
+            thisWebpage.restrictions = robList;
+
+            return thisWebpage;
         }
     }
 }

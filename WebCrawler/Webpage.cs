@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebCrawler
 {
-    class webpage
+    class webPage
     {
         public Uri baseUrl;
         public List<robotRestriction> restrictions;
@@ -14,11 +14,11 @@ namespace WebCrawler
         public int lastVisited;
         public int delayValue;
 
-        public webpage()
+        public webPage()
         {
         }
 
-        public webpage(Uri inputUrl, List<robotRestriction> inputList, int inputHash, int visited, int delay)
+        public webPage(Uri inputUrl, List<robotRestriction> inputList, int inputHash, int visited, int delay)
         {
             baseUrl = inputUrl;
             restrictions = inputList;
