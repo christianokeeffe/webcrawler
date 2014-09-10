@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace WebCrawler
     {
         static void Main(string[] args)
         {
-            
+            getLinksFromUrl("http://www.tv2.dk");
             Console.ReadKey();
         }
 
@@ -112,7 +113,21 @@ namespace WebCrawler
 
             return robList;
         }
-
+        private static List<string> getLinksFromUrl(string url)
+        {
+            List<string> Links = new List<string>();
+            HtmlWeb hw = new HtmlWeb();
+            HtmlDocument doc = hw.Load(@url);
+            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]").Distinct())
+            {
+                string href = link.Attributes["href"].Value;
+                if (!Links.Contains(href))
+                {
+                    Links.Add(href);
+                }
+            }
+            return Links;
+        }
         private int convertUriToHash(Uri webPage, string append)
         {
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
