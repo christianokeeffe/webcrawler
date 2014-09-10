@@ -13,9 +13,9 @@ namespace WebCrawler
     {
         static void Main(string[] args)
         {
-            Uri webpage = new Uri("http://tv2.dk");
-            string test = getPageContent(webpage);
-            getLinksFromString(test);
+            Queue<Uri> listOfPages = new Queue<Uri>();
+            listOfPages.Enqueue(new Uri("http://aau.dk"));
+            crawlWebSites(listOfPages, "OKEEFFE");
             Console.ReadKey();
         }
 
@@ -30,7 +30,12 @@ namespace WebCrawler
             while (pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
-                string siteContent = crawlSite(botName, URL, restrictions, restrictionsChecker, webpages);
+                string siteContent = "";
+                try
+                {
+                    siteContent = crawlSite(botName, URL, restrictionsChecker, webpages, listOfPages);
+                }
+                catch (Exception e) { }
                 if(siteContent == null)
                 {
                     listOfPages.Enqueue(URL);
@@ -42,15 +47,28 @@ namespace WebCrawler
             }
         }
 
-        private static string crawlSite(string botName, Uri webPageUrl, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker, List<webPage> webpages)
+        private static string crawlSite(string botName, Uri webPageUrl, restrictionsCheck restrictionsChecker, List<webPage> webpages, Queue<Uri> toVisit)
         {
             webPage tempPage = null;
             webpages = restrictionsChecker.checkAndGetRobotFile(webPageUrl, botName, webpages, tempPage);
 
             if (restrictionsChecker.canVisit(tempPage))
             {
-                //restrictionsChecker.
-                //crawl
+                if(restrictionsChecker.isAllowed(tempPage.restrictions, webPageUrl))
+                {
+                    string returnValue = getPageContent(webPageUrl);
+                    Console.WriteLine(webPageUrl);
+                    List<string> stringsToAdd = getLinksFromString(returnValue);
+                    foreach(string s in stringsToAdd)
+                    {
+                        toVisit.Enqueue(new Uri(s));
+                    }
+                    return returnValue;
+                }
+                else
+                {
+                    throw new UnauthorizedAccessException();
+                }
             }
             else
             {
