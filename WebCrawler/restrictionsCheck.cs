@@ -34,7 +34,7 @@ namespace WebCrawler
         }
 
 
-        public static List<webpage> checkAndGetRobotFile(Uri inputPage, string botName, List<webpage> allWebpages)
+        public static List<webPage> checkAndGetRobotFile(Uri inputPage, string botName, List<webPage> allWebpages)
         {
             bool visited = false;
             int i = 0;

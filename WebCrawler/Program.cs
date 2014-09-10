@@ -76,11 +76,11 @@ namespace WebCrawler
             return unixTimestamp;
         }
 
-        private bool canVisit(Uri webPage, List<webPageDelays> webDelays)
+        private bool canVisit(Uri webPage, List<webPage> webDelays)
         {
             int domainHash = convertUriToHash(webPage);
 
-                foreach(webPageDelays test in webDelays) {
+                foreach(webPage test in webDelays) {
                     if (test.hashValue == domainHash)
                     {
                         if (test.lastVisited - time() > test.delayValue)
