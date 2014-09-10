@@ -36,7 +36,7 @@ namespace WebCrawler
 
         private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions)
         {
-            restrictions = checkAndGetRobotFile(webPage, botName);
+            restrictions = checkAndGetRobotFile(webPage, botName, restrictions);
             //check delay
             //check permission
             //crawl
