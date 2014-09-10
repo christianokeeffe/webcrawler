@@ -11,7 +11,7 @@ namespace WebCrawler
     class restrictionsCheck
     {
 
-        private static bool isAllowed(List<robotRestriction> restrictions, Uri webpage)
+        public static bool isAllowed(List<robotRestriction> restrictions, Uri webpage)
         {
             foreach (robotRestriction restrict in restrictions)
             {
@@ -34,12 +34,20 @@ namespace WebCrawler
         }
 
 
-        private static List<robotRestriction> checkAndGetRobotFile(Uri webPage, string botName, List<robotRestriction> restrictions)
+        public static List<webpage> checkAndGetRobotFile(Uri inputPage, string botName, List<webpage> allWebpages)
         {
+            bool visited = false;
+            foreach (webpage page in allWebpages)
+            {
+                if (page.baseUrl == new Uri (inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")))
+                {
+
+                }
+            }
             return null;
         }
 
-        private static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName, List<webPageDelays> webDelays)
+        public static List<robotRestriction> getRobotsRestrictions(Uri webPage, string botName, List<webPageDelays> webDelays)
         {
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
             string robotFile = domainName + "/robots.txt";
