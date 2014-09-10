@@ -13,3 +13,9 @@ C:\Users\Mette\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.csprojRes
 C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\bin\Debug\WebCrawler.exe.config
 C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.exe
 C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.pdb
+C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\bin\Debug\WebCrawler.exe
+C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\bin\Debug\WebCrawler.pdb
+C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Kasper\Source\Repos\webcrawler\WebCrawler\obj\Debug\WebCrawler.csprojResolveAssemblyReference.cache
