@@ -25,25 +25,25 @@ namespace WebCrawler
             List<string> pageContents = new List<string>();
             restrictionsCheck restrictionsChecker = new restrictionsCheck();
             nearMatch matchCheck = new nearMatch();
+            List<webPage> webpages = new List<webPage>();
             while (pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
-                string siteContent = crawlSite(botName, URL, restrictions, restrictionsChecker);
+                string siteContent = crawlSite(botName, URL, restrictions, restrictionsChecker, webpages);
                 if(siteContent == null)
                 {
                     listOfPages.Enqueue(URL);
                 }
                 else
                 {
-                    
                     pageContents.Add(siteContent);
                 }
             }
         }
 
-        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker)
+        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker, List<webPage> webpages)
         {
-            //restrictions = restrictionsChecker.checkAndGetRobotFile(webPage, botName, restrictions);
+            restrictionsChecker.checkAndGetRobotFile(webPage, botName, webpages);
             //check delay
             //check permission
             //crawl
