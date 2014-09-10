@@ -35,7 +35,7 @@ namespace WebCrawler
                 {
                     siteContent = crawlSite(botName, URL, restrictionsChecker, webpages, listOfPages);
                 }
-                catch (Exception e) { }
+                catch (UnauthorizedAccessException e) { }
                 if(siteContent == null)
                 {
                     listOfPages.Enqueue(URL);
@@ -49,8 +49,8 @@ namespace WebCrawler
 
         private static string crawlSite(string botName, Uri webPageUrl, restrictionsCheck restrictionsChecker, List<webPage> webpages, Queue<Uri> toVisit)
         {
-            webPage tempPage = new webPage();
-            webpages = restrictionsChecker.checkAndGetRobotFile(webPageUrl, botName, webpages, tempPage);
+
+            webPage tempPage = webpages[restrictionsChecker.checkAndGetRobotFile(webPageUrl, botName, webpages)];
 
             if (restrictionsChecker.canVisit(tempPage))
             {
@@ -95,12 +95,16 @@ namespace WebCrawler
             HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(htmlString);
             List<string> Links = new List<string>();
-            foreach(HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]").Distinct())
+            HtmlNodeCollection linkList = doc.DocumentNode.SelectNodes("//a[@href]");
+            if (linkList != null)
             {
-                string href = link.Attributes["href"].Value;
-                if (!Links.Contains(href))
+                foreach (HtmlNode link in linkList.Distinct())
                 {
-                    Links.Add(href);
+                    string href = link.Attributes["href"].Value;
+                    if (!Links.Contains(href))
+                    {
+                        Links.Add(href);
+                    }
                 }
             }
             return Links;

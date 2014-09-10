@@ -34,30 +34,38 @@ namespace WebCrawler
         }
 
 
-        public List<webPage> checkAndGetRobotFile(Uri inputPage, string botName, List<webPage> allWebpages, webPage CurrentWebPage)
+        public int checkAndGetRobotFile(Uri inputPage, string botName, List<webPage> allWebpages)
         {
             bool visited = false;
             int i = 0;
             while (visited == false && i < allWebpages.Count)
             {
-                if (allWebpages[i].baseUrl == new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")))
+                string url = inputPage.AbsoluteUri;
+                if (inputPage.AbsolutePath != "/")
+                {
+                    url = inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "");
+                } 
+                if (allWebpages[i].baseUrl == new Uri(url))
                 {
                     visited = true;
-                    CurrentWebPage = allWebpages[i];
+                    return i;
                 }
+                i++;
             }
             if (!visited)
             {
                 string url = inputPage.AbsoluteUri;
                 if (inputPage.AbsolutePath != "/")
                 {
-                    inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "");
+                    url = inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "");
                 }
-                CurrentWebPage.baseUrl = inputPage;
-                CurrentWebPage = getRobotsRestrictions(botName, CurrentWebPage);
-                allWebpages.Add(CurrentWebPage);
+                webPage tempPage = new webPage();
+                tempPage.baseUrl = new Uri(url);
+                tempPage = getRobotsRestrictions(botName, tempPage);
+                allWebpages.Add(tempPage);
+                
             }
-            return allWebpages;
+            return allWebpages.Count - 1;
         }
 
         public static webPage getRobotsRestrictions(string botName, webPage thisWebpage)
@@ -65,85 +73,90 @@ namespace WebCrawler
             string robotFile = thisWebpage.baseUrl.ToString().TrimEnd('/') + "/robots.txt";
             List<robotRestriction> robList = new List<robotRestriction>();
             WebClient client = new WebClient();
-            Stream stream = client.OpenRead(robotFile);
-            StreamReader reader = new StreamReader(stream);
-            string str = "";
-            string agent = "*";
-            bool hasSpecificRules = false;
-            bool isRelevant = true;
-            botName = botName.ToLower();
-            thisWebpage.delayValue = 2;
-
-            while (reader.Peek() >= 0)
+            try
             {
-                str = reader.ReadLine().ToLower();
+                Stream stream = client.OpenRead(robotFile);
+                StreamReader reader = new StreamReader(stream);
+                string str = "";
+                string agent = "*";
+                bool hasSpecificRules = false;
+                bool isRelevant = true;
+                botName = botName.ToLower();
+                thisWebpage.delayValue = 2;
 
-                if (str.StartsWith("user-agent:"))
+                while (reader.Peek() >= 0)
                 {
-                    str = str.Substring("user-agent:".Length);
-                    str = str.Trim();
-                    agent = str;
-                    if (str == botName)
+                    str = reader.ReadLine().ToLower();
+
+                    if (str.StartsWith("user-agent:"))
                     {
-                        if (!hasSpecificRules)
+                        str = str.Substring("user-agent:".Length);
+                        str = str.Trim();
+                        agent = str;
+                        if (str == botName)
                         {
-                            robList.Clear();
-                            hasSpecificRules = true;
-                            isRelevant = true;
+                            if (!hasSpecificRules)
+                            {
+                                robList.Clear();
+                                hasSpecificRules = true;
+                                isRelevant = true;
+                            }
                         }
-                    }
-                    else if (str == "*")
-                    {
-                        if (!hasSpecificRules)
+                        else if (str == "*")
                         {
-                            isRelevant = true;
+                            if (!hasSpecificRules)
+                            {
+                                isRelevant = true;
+                            }
+                            else
+                            {
+                                isRelevant = false;
+                            }
                         }
                         else
                         {
                             isRelevant = false;
                         }
                     }
-                    else
+                    if (isRelevant)
                     {
-                        isRelevant = false;
-                    }
-                }
-                if (isRelevant)
-                {
-                    if (str.StartsWith("allow"))
-                    {
-                        str = str.Substring("allow:".Length);
-                        str = str.Trim();
-                        robList.Add(new robotRestriction("allow", new Uri(str)));
-                    }
-                    if (str.StartsWith("allowed"))
-                    {
-                        str = str.Substring("allowed:".Length);
-                        str = str.Trim();
-                        robList.Add(new robotRestriction("allow", new Uri(str)));
-                    }
-                    if (str.StartsWith("disallow"))
-                    {
-                        str = str.Substring("disallow:".Length);
-                        str = str.Trim();
-                        robList.Add(new robotRestriction("disallow", new Uri(str)));
-                    }
-                    if (str.StartsWith("disallow"))
-                    {
-                        str = str.Substring("disallow:".Length);
-                        str = str.Trim();
-                        robList.Add(new robotRestriction("disallow", new Uri(str)));
-                    }
-                    if (str.StartsWith("crawl-delay"))
-                    {
-                        str = str.Substring("crawl-delay:".Length);
-                        str = str.Trim();
-                        thisWebpage.delayValue = int.Parse(str);
+                        if (str.StartsWith("allow"))
+                        {
+                            str = str.Substring("allow:".Length);
+                            str = str.Trim();
+                            robList.Add(new robotRestriction("allow", new Uri(str)));
+                        }
+                        if (str.StartsWith("allowed"))
+                        {
+                            str = str.Substring("allowed:".Length);
+                            str = str.Trim();
+                            robList.Add(new robotRestriction("allow", new Uri(str)));
+                        }
+                        if (str.StartsWith("disallow"))
+                        {
+                            str = str.Substring("disallow:".Length);
+                            str = str.Trim();
+                            robList.Add(new robotRestriction("disallow", new Uri(str)));
+                        }
+                        if (str.StartsWith("disallow"))
+                        {
+                            str = str.Substring("disallow:".Length);
+                            str = str.Trim();
+                            robList.Add(new robotRestriction("disallow", new Uri(str)));
+                        }
+                        if (str.StartsWith("crawl-delay"))
+                        {
+                            str = str.Substring("crawl-delay:".Length);
+                            str = str.Trim();
+                            thisWebpage.delayValue = int.Parse(str);
+                        }
                     }
                 }
             }
+            catch (System.Net.WebException) { }
 
             thisWebpage.restrictions = robList;
+
 
             return thisWebpage;
         }
