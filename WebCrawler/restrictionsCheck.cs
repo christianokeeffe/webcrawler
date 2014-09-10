@@ -47,8 +47,8 @@ namespace WebCrawler
             }
             if (!visited)
             {
-//                webpage tempPage = new webpage(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")), getRobotsRestrictions(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")), botName));
-//                allWebpages.Add(tempPage);
+                webPage tempPage = new webPage(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")));
+                getRobotsRestrictions(botName, tempPage);
             }
             return allWebpages;
         }
