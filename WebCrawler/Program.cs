@@ -24,21 +24,26 @@ namespace WebCrawler
             List<robotRestriction> restrictions = new List<robotRestriction>();
             List<string> pageContents = new List<string>();
             restrictionsCheck restrictionsChecker = new restrictionsCheck();
-            while(pageContents.Count < 1000 && listOfPages.Count != 0)
+            while (pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
-                crawlSite(botName, URL, restrictions);
+                crawlSite(botName, URL, restrictions, restrictionsChecker);
             }
         }
 
-        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions)
+        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker)
         {
-            restrictions = checkAndGetRobotFile(webPage, botName, restrictions);
+            restrictions = restrictionsChecker.checkAndGetRobotFile(webPage, botName, restrictions);
             //check delay
             //check permission
             //crawl
             return null;
         }
+        /*
+        private static string getPageContent(Uri webpage)
+        {
+
+        }*/
 
 
         private static List<string> getLinksFromUrl(Uri webpage)
@@ -58,26 +63,36 @@ namespace WebCrawler
         }
 
 
-        private int convertUriToHash(Uri webPage, string append)
+        private int convertUriToHash(Uri webPage)
         {
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
-            if (append != "")
-            {
-
-            }
             int hashCode = domainName.GetHashCode();
             return hashCode;
         }
 
-        private bool sendDelay(Uri webPage, List<webPageDelays> webDelays)
+        private int time()
         {
-            if(webDelays.Count > 0) {
+            int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            return unixTimestamp;
+        }
+
+        private bool canVisit(Uri webPage, List<webPageDelays> webDelays)
+        {
+            int domainHash = convertUriToHash(webPage);
+
                 foreach(webPageDelays test in webDelays) {
-
-                }
-
+                    if (test.hashValue == domainHash)
+                    {
+                        if (test.lastVisited - time() > test.delayValue)
+                        {
+                            test.lastVisited = time();
+                            return true;
+                        }
+                        else
+                            return false;
+                    }
             }
-            return true;
+                return false;
         }
     }
 }
