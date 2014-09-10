@@ -42,13 +42,20 @@ namespace WebCrawler
             }
         }
 
-        private static string crawlSite(string botName, Uri webPage, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker, List<webPage> webpages)
+        private static string crawlSite(string botName, Uri webPageUrl, List<robotRestriction> restrictions, restrictionsCheck restrictionsChecker, List<webPage> webpages)
         {
-            webpages = restrictionsChecker.checkAndGetRobotFile(webPage, botName, webpages);
-            //check delay
-            //check permission
-            //crawl
-            return null;
+            webPage tempPage = null;
+            webpages = restrictionsChecker.checkAndGetRobotFile(webPageUrl, botName, webpages, tempPage);
+
+            if (restrictionsChecker.canVisit(tempPage))
+            {
+                //restrictionsChecker.
+                //crawl
+            }
+            else
+            {
+                return null;
+            }
         }
         
         private static string getPageContent(Uri webpage)
@@ -77,11 +84,5 @@ namespace WebCrawler
         }
 
 
-        private int convertUriToHash(Uri webPage)
-        {
-            string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
-            int hashCode = domainName.GetHashCode();
-            return hashCode;
-        }
     }
 }

@@ -11,7 +11,7 @@ namespace WebCrawler
     class restrictionsCheck
     {
 
-        public static bool isAllowed(List<robotRestriction> restrictions, Uri webpage)
+        public bool isAllowed(List<robotRestriction> restrictions, Uri webpage)
         {
             foreach (robotRestriction restrict in restrictions)
             {
@@ -34,7 +34,7 @@ namespace WebCrawler
         }
 
 
-        public List<webPage> checkAndGetRobotFile(Uri inputPage, string botName, List<webPage> allWebpages)
+        public List<webPage> checkAndGetRobotFile(Uri inputPage, string botName, List<webPage> allWebpages, webPage CurrentWebPage)
         {
             bool visited = false;
             int i = 0;
@@ -43,6 +43,7 @@ namespace WebCrawler
                 if (allWebpages[i].baseUrl == new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")))
                 {
                     visited = true;
+                    CurrentWebPage = allWebpages[i];
                 }
             }
             if (!visited)
@@ -50,6 +51,7 @@ namespace WebCrawler
                 webPage tempPage = new webPage(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")));
                 tempPage = getRobotsRestrictions(botName, tempPage);
                 allWebpages.Add(tempPage);
+                CurrentWebPage = tempPage;
             }
             return allWebpages;
         }
@@ -140,6 +142,21 @@ namespace WebCrawler
             thisWebpage.restrictions = robList;
 
             return thisWebpage;
+        }
+        private int time()
+      {
+            int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            return unixTimestamp;
+        }
+
+      public bool canVisit(webPage webDelays)
+        {
+            if (webDelays.lastVisited - time() >= webDelays.delayValue)
+            {
+                webDelays.lastVisited = time();
+                return true;
+            }
+            return false;
         }
     }
 }
