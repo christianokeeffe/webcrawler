@@ -9,7 +9,7 @@ namespace WebCrawler
     class robotRestriction
     {
         public string type;
-        string url;
+        public string url;
         public robotRestriction()
         {
         }

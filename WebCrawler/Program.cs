@@ -13,7 +13,8 @@ namespace WebCrawler
     {
         static void Main(string[] args)
         {
-            getLinksFromUrl("http://www.tv2.dk");
+            Uri webpage = new Uri("http://tv2.dk");
+            getLinksFromUrl(webpage);
             Console.ReadKey();
         }
 
@@ -113,12 +114,13 @@ namespace WebCrawler
 
             return robList;
         }
-        private static List<string> getLinksFromUrl(string url)
+
+        private static List<string> getLinksFromUrl(Uri webpage)
         {
             List<string> Links = new List<string>();
             HtmlWeb hw = new HtmlWeb();
-            HtmlDocument doc = hw.Load(@url);
-            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]").Distinct())
+            HtmlDocument doc = hw.Load((webpage.ToString()));
+            foreach(HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]").Distinct())
             {
                 string href = link.Attributes["href"].Value;
                 if (!Links.Contains(href))
@@ -128,6 +130,33 @@ namespace WebCrawler
             }
             return Links;
         }
+
+        //private static bool isAllowed(List<robotRestriction> restrictions, Uri webpage)
+        //{
+        //    foreach (robotRestriction restrict in restrictions)
+        //    {
+        //        if(restrict.type == "disallow")
+        //        {
+        //            if (webpage)
+        //            {
+
+        //            }
+        //            else
+        //            {
+
+        //            }
+        //        }
+        //        else if()
+        //        {
+
+        //        }
+        //        else
+        //        {
+
+        //        }
+        //    }
+        //    return true;
+        //}
         private int convertUriToHash(Uri webPage, string append)
         {
             string domainName = webPage.AbsoluteUri.Replace(webPage.AbsolutePath, "");
