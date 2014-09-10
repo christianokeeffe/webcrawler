@@ -8,7 +8,7 @@ namespace WebCrawler
 {
     class robotRestriction
     {
-        string type;
+        public string type;
         string url;
         public robotRestriction()
         {
