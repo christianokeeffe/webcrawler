@@ -53,7 +53,7 @@ namespace WebCrawler
             return allWebpages;
         }
 
-        public static webpage getRobotsRestrictions(string botName, webpage thisWebpage)
+        public static webPage getRobotsRestrictions(string botName, webPage thisWebpage)
         {
             string robotFile = thisWebpage.baseUrl + "/robots.txt";
             List<robotRestriction> robList = new List<robotRestriction>();
