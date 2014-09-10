@@ -40,11 +40,7 @@ namespace WebCrawler
             int i = 0;
             while (visited == false && i < allWebpages.Count)
             {
-                string url = inputPage.AbsoluteUri;
-                if (inputPage.AbsolutePath != "/")
-                {
-                    url = inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "");
-                } 
+                string url = inputPage.Scheme + "://" + inputPage.Host;
                 if (allWebpages[i].baseUrl == new Uri(url))
                 {
                     visited = true;
@@ -54,11 +50,7 @@ namespace WebCrawler
             }
             if (!visited)
             {
-                string url = inputPage.AbsoluteUri;
-                if (inputPage.AbsolutePath != "/")
-                {
-                    url = inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "");
-                }
+                string url = inputPage.Scheme + "://" + inputPage.Host;
                 webPage tempPage = new webPage();
                 tempPage.baseUrl = new Uri(url);
                 tempPage = getRobotsRestrictions(botName, tempPage);
@@ -124,25 +116,25 @@ namespace WebCrawler
                         {
                             str = str.Substring("allow:".Length);
                             str = str.Trim();
-                            robList.Add(new robotRestriction("allow", new Uri(str)));
+                            robList.Add(new robotRestriction("allow", str));
                         }
                         if (str.StartsWith("allowed"))
                         {
                             str = str.Substring("allowed:".Length);
                             str = str.Trim();
-                            robList.Add(new robotRestriction("allow", new Uri(str)));
+                            robList.Add(new robotRestriction("allow", str));
                         }
                         if (str.StartsWith("disallow"))
                         {
                             str = str.Substring("disallow:".Length);
                             str = str.Trim();
-                            robList.Add(new robotRestriction("disallow", new Uri(str)));
+                            robList.Add(new robotRestriction("disallow", str));
                         }
                         if (str.StartsWith("disallow"))
                         {
                             str = str.Substring("disallow:".Length);
                             str = str.Trim();
-                            robList.Add(new robotRestriction("disallow", new Uri(str)));
+                            robList.Add(new robotRestriction("disallow", str));
                         }
                         if (str.StartsWith("crawl-delay"))
                         {
@@ -160,7 +152,7 @@ namespace WebCrawler
 
             return thisWebpage;
         }
-        private int time()
+        public int time()
       {
             int unixTimestamp = (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             return unixTimestamp;

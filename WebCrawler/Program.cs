@@ -14,7 +14,11 @@ namespace WebCrawler
         static void Main(string[] args)
         {
             Queue<Uri> listOfPages = new Queue<Uri>();
-            listOfPages.Enqueue(new Uri("http://www.aau.dk/"));
+            listOfPages.Enqueue(new Uri("http://www.facebook.dk"));
+            listOfPages.Enqueue(new Uri("http://www.dr.dk"));
+            listOfPages.Enqueue(new Uri("http://www.tv2.dk"));
+            listOfPages.Enqueue(new Uri("http://www.version2.dk"));
+            listOfPages.Enqueue(new Uri("http://www.aau.dk"));
             crawlWebSites(listOfPages, "OKEEFFE");
             Console.ReadKey();
         }
@@ -27,24 +31,46 @@ namespace WebCrawler
             restrictionsCheck restrictionsChecker = new restrictionsCheck();
             nearMatch matchCheck = new nearMatch();
             List<webPage> webpages = new List<webPage>();
-            while (pageContents.Count < 1000 && listOfPages.Count != 0)
+            List<string> usedSites = new List<string>();
+            int startTime = restrictionsChecker.time();
+            int badUri = 0;
+            while (pageContents.Count < 100 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
-                string siteContent = "";
-                try
+                if (usedSites.IndexOf(URL.ToString()) == -1)
                 {
-                    siteContent = crawlSite(botName, URL, restrictionsChecker, webpages, listOfPages);
-                }
-                catch (UnauthorizedAccessException e) { }
-                if(siteContent == null)
-                {
-                    listOfPages.Enqueue(URL);
+                    string siteContent = "";
+                    try
+                    {
+                        siteContent = crawlSite(botName, URL, restrictionsChecker, webpages, listOfPages);
+                    }
+                    catch (UnauthorizedAccessException) { }
+                    catch (NullReferenceException) { }
+                    catch (WebException) { }
+                    catch (UriFormatException) { badUri++; }
+                    if (siteContent == null)
+                    {
+                        listOfPages.Enqueue(URL);
+                    }
+                    else
+                    {
+                        usedSites.Add(URL.ToString());
+                    }
+
+                    if (siteContent != "" && siteContent != null)
+                    {
+                        pageContents.Add(siteContent);
+                    }
                 }
                 else
                 {
-                    pageContents.Add(siteContent);
+
                 }
             }
+            int endTime = restrictionsChecker.time();
+            Console.WriteLine("Did " + pageContents.Count + " pages in " + (startTime - endTime) + "seconds!");
+            Console.WriteLine("That is " + (pageContents.Count / (endTime - startTime)) + " pages per second");
+            Console.WriteLine("I had " + badUri + " uri errors:(");
         }
 
         private static string crawlSite(string botName, Uri webPageUrl, restrictionsCheck restrictionsChecker, List<webPage> webpages, Queue<Uri> toVisit)
@@ -57,7 +83,7 @@ namespace WebCrawler
                 if(restrictionsChecker.isAllowed(tempPage.restrictions, webPageUrl))
                 {
                     string returnValue = getPageContent(webPageUrl);
-                    Console.WriteLine(webPageUrl);
+                    //Console.WriteLine(webPageUrl);
                     List<string> stringsToAdd = getLinksFromString(returnValue);
                     foreach(string s in stringsToAdd)
                     {
@@ -85,7 +111,8 @@ namespace WebCrawler
         {
             HtmlWeb hw = new HtmlWeb();
             HtmlDocument doc = hw.Load((webpage.ToString()));
-            string htmlString = doc.DocumentNode.InnerHtml;
+            string htmlString =doc.DocumentNode.InnerHtml;
+            
             return htmlString;
         }
 

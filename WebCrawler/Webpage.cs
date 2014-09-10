@@ -16,6 +16,8 @@ namespace WebCrawler
 
         public webPage()
         {
+            lastVisited = 0;
+            delayValue = 2;
         }
 
         public webPage(Uri inputUrl)
