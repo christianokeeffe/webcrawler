@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="restrictionsCheck.cs" />
     <Compile Include="Webpage.cs" />
-    <Compile Include="webPageDelays.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="robotRestriction.cs" />
