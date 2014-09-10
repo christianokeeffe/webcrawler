@@ -9,7 +9,7 @@ namespace WebCrawler
 {
     class nearMatch
     {
-        public static bool isNearMatch(string s1, string s2, int shingling_length, double threshold)
+        private static bool isNearMatch(string s1, string s2, int shingling_length, double threshold)
         {
             double result = jac(shingling_hash(s1, shingling_length), shingling_hash(s2, shingling_length));
             return result >= threshold;
