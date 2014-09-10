@@ -47,13 +47,13 @@ namespace WebCrawler
             }
             if (!visited)
             {
-//                webpage tempPage = new webpage(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")), getRobotsRestrictions(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")), botName));
-//                allWebpages.Add(tempPage);
+                webPage tempPage = new webPage(new Uri(inputPage.AbsoluteUri.Replace(inputPage.AbsolutePath, "")));
+                getRobotsRestrictions(botName, tempPage);
             }
             return allWebpages;
         }
 
-        public static webpage getRobotsRestrictions(string botName, webpage thisWebpage)
+        public static webPage getRobotsRestrictions(string botName, webPage thisWebpage)
         {
             string robotFile = thisWebpage.baseUrl + "/robots.txt";
             List<robotRestriction> robList = new List<robotRestriction>();
