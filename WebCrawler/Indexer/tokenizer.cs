@@ -21,7 +21,13 @@ namespace SearchEngine
             string[] tokens = lowerCased.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
             string[] stopWordsRemoved = noStopWords(tokens);
 
-            return stopWordsRemoved;
+            for (int i = 0; i < stopWordsRemoved.Length; i++)
+            {
+                stopWordsRemoved[i] = stopWordsRemoved[i].Trim();
+            }
+            stopWordsRemoved = stopWordsRemoved.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                return stopWordsRemoved;
         }
 
         private static string[] noStopWords(string[] tokens)

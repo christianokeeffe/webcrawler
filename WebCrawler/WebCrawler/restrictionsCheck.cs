@@ -140,7 +140,15 @@ namespace SearchEngine
                         {
                             str = str.Substring("crawl-delay:".Length);
                             str = str.Trim();
-                            thisWebpage.delayValue = int.Parse(str);
+                            thisWebpage.delayValue = (int)double.Parse(str);
+                            if(thisWebpage.delayValue == 0)
+                            {
+                                thisWebpage.delayValue = 1;
+                                thisWebpage.delayValue = 1;
+                                thisWebpage.delayValue = 1;
+                                thisWebpage.delayValue = 1;
+                                thisWebpage.delayValue = 1;
+                            }
                         }
                     }
                 }

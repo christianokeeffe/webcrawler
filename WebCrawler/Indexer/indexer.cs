@@ -32,7 +32,7 @@ namespace SearchEngine
             listToSort.Sort(
                 delegate(termPagePair tp1, termPagePair tp2) 
                 { 
-                    int compval = tp1.term.CompareTo(tp1.term);
+                    int compval = tp1.term.CompareTo(tp2.term);
                     if(compval == 0)
                     {
                         return tp1.pageID.CompareTo(tp2.pageID);
@@ -54,8 +54,9 @@ namespace SearchEngine
                 if(currentTerm != inputList[i].term)
                 {
                     returnList.Add(new incidenceVector(inputList[i].term));
+                    currentTerm = inputList[i].term;
                 }
-                returnList[returnList.Count - 1].pageIDs.Add(inputList[i].pageID);
+                returnList[returnList.Count-1].pageIDs.Add(inputList[i].pageID);
             }
             return returnList;
         }

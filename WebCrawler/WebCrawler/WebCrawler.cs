@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -20,7 +21,7 @@ namespace SearchEngine
             List<string> usedSites = new List<string>();
             int startTime = restrictionsChecker.time();
             int badUri = 0;
-            while (pageContents.Count < 100 && listOfPages.Count != 0)
+            while (pageContents.Count < 1000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
                 if (usedSites.IndexOf(URL.ToString()) == -1)
@@ -33,7 +34,8 @@ namespace SearchEngine
                     catch (UnauthorizedAccessException) { }
                     catch (NullReferenceException) { }
                     catch (WebException) { }
-                    catch (System.ArgumentException) { }
+                    catch (IOException) { }
+                    catch (ArgumentException) { }
                     catch (UriFormatException) { badUri++; }
                     if (siteContent == null)
                     {
