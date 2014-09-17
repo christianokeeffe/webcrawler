@@ -44,9 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="incidenceVector.cs" />
+    <Compile Include="indexer.cs" />
     <Compile Include="nearMatch.cs" />
     <Compile Include="restrictionsCheck.cs" />
     <Compile Include="tokenizer.cs" />
+    <Compile Include="termPagePair.cs" />
     <Compile Include="webPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
