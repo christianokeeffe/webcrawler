@@ -57,7 +57,7 @@ namespace WebCrawler
                     if (siteContent != "" && siteContent != null)
                     {
                         pageContents.Add(siteContent);
-                        Console.WriteLine(pageContents.Count + URL.ToString());
+                        Console.WriteLine(pageContents.Count +" "+ URL.ToString());
                     }
                 }
                 else
