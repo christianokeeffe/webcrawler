@@ -13,14 +13,15 @@ namespace WebCrawler
     {
         static void Main(string[] args)
         {
-            //Queue<Uri> listOfPages = new Queue<Uri>();
-            //listOfPages.Enqueue(new Uri("http://dkdk.dk"));
-            //crawlWebSites(listOfPages, "OKEEFFE");
+            Queue<Uri> listOfPages = new Queue<Uri>();
+            listOfPages.Enqueue(new Uri("http://www.december.com/html/demo/hello.html"));
+            List<string> temp = crawlWebSites(listOfPages, "OKEEFFE");
+            string[] tokens = tokenizer.splitString(temp[0]);
             Console.ReadKey();
         }
 
 
-        private static void crawlWebSites(Queue<Uri> listOfPages, string botName)
+        private static List<string> crawlWebSites(Queue<Uri> listOfPages, string botName)
         {
             List<robotRestriction> restrictions = new List<robotRestriction>();
             List<string> pageContents = new List<string>();
@@ -30,7 +31,7 @@ namespace WebCrawler
             List<string> usedSites = new List<string>();
             int startTime = restrictionsChecker.time();
             int badUri = 0;
-            while (pageContents.Count < 10000 && listOfPages.Count != 0)
+            while (pageContents.Count < 1 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
                 if (usedSites.IndexOf(URL.ToString()) == -1)
@@ -66,9 +67,10 @@ namespace WebCrawler
                 }
             }
             int endTime = restrictionsChecker.time();
-            Console.WriteLine("Did " + pageContents.Count + " pages in " + (startTime - endTime) + "seconds!");
-            Console.WriteLine("That is " + (pageContents.Count / (endTime - startTime)) + " pages per second");
+            //Console.WriteLine("Did " + pageContents.Count + " pages in " + (startTime - endTime) + "seconds!");
+            //Console.WriteLine("That is " + (pageContents.Count / (endTime - startTime)) + " pages per second");
             Console.WriteLine("I had " + badUri + " uri errors:(");
+            return pageContents;
         }
 
         private static string crawlSite(string botName, Uri webPageUrl, restrictionsCheck restrictionsChecker, List<webPage> webpages, Queue<Uri> toVisit)
