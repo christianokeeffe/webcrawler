@@ -9,7 +9,7 @@ namespace SearchEngine
     class incidenceVector
     {
         public string term;
-        public List<int> pageIDs = new List<int>();
+        public List<Posting> pageIDs = new List<Posting>();
 
         public incidenceVector (string term)
         {
@@ -19,6 +19,18 @@ namespace SearchEngine
         public int pageCount
         {
             get { return pageIDs.Count(); }
+        }
+    }
+
+    class Posting
+    {
+        public int pageID;
+        public int pageCount;
+
+        public Posting(int pageID)
+        {
+            this.pageID = pageID;
+            pageCount = 0;
         }
     }
 }

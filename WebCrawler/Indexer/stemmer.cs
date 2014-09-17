@@ -16,10 +16,7 @@ namespace SearchEngine
             foreach (string str in inputString)
             {
                 string stemmed = eng.Stem(str);
-                if (!returnString.Contains(stemmed))
-                {
-                    returnString.Add(stemmed);
-                }
+                returnString.Add(stemmed);
             }
 
             return returnString;

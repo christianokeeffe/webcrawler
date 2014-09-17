@@ -48,6 +48,7 @@ namespace SearchEngine
         private List<incidenceVector> pairsToVectorTable(List<termPagePair> inputList)
         {
             string currentTerm = "";
+            int currentPageID = -1;
             List<incidenceVector> returnList = new List<incidenceVector>();
             for(int i = 0; i < inputList.Count; i++)
             {
@@ -55,8 +56,16 @@ namespace SearchEngine
                 {
                     returnList.Add(new incidenceVector(inputList[i].term));
                     currentTerm = inputList[i].term;
+                    currentPageID = inputList[i].pageID;
+                    returnList[returnList.Count - 1].pageIDs.Add(new Posting(currentPageID));
                 }
-                returnList[returnList.Count-1].pageIDs.Add(inputList[i].pageID);
+                else if (currentPageID != inputList[i].pageID)
+                {
+                    currentPageID = inputList[i].pageID;
+                    returnList[returnList.Count - 1].pageIDs.Add(new Posting(currentPageID));
+                }
+
+                returnList[returnList.Count - 1].pageIDs[returnList[returnList.Count - 1].pageIDs.Count - 1].pageCount++;
             }
             return returnList;
         }

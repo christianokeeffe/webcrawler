@@ -15,7 +15,7 @@ namespace SearchEngine
         {
             WebCrawler webCrawler = new WebCrawler();
             Queue<Uri> listOfPages = new Queue<Uri>();
-            listOfPages.Enqueue(new Uri("http://www.cnn.com"));
+            listOfPages.Enqueue(new Uri("http://9gag.com"));
             List<KeyValuePair<string, string>> temp = webCrawler.crawlWebSites(listOfPages, "OKEEFFE");
             indexer index = new indexer();
             Console.ReadKey();
