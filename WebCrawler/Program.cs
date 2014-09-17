@@ -16,13 +16,9 @@ namespace SearchEngine
             WebCrawler webCrawler = new WebCrawler();
             Queue<Uri> listOfPages = new Queue<Uri>();
             listOfPages.Enqueue(new Uri("http://www.december.com/html/demo/hello.html"));
-            List<string> temp = webCrawler.crawlWebSites(listOfPages, "OKEEFFE");
-            string[] tokens = tokenizer.splitString(temp[0]);
+            List<KeyValuePair<string, string>> temp = webCrawler.crawlWebSites(listOfPages, "OKEEFFE");
+            
             Console.ReadKey();
         }
-
-
-        
-
     }
 }

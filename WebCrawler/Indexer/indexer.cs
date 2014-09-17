@@ -8,10 +8,12 @@ namespace SearchEngine
 {
     class indexer
     {
-        public List<incidenceVector> getIndexTable(List<termPagePair> termPageList)
+        public List<incidenceVector> getIndexTable(List<KeyValuePair<string, string>> inputList)
         {
-            termPageList = sortPairs(termPageList);
-            return pairsToVectorTable(termPageList);
+            
+            /*termPageList = sortPairs(termPageList);
+            return pairsToVectorTable(termPageList);*/
+            return null;
         }
 
         private List<termPagePair> sortPairs(List<termPagePair> listToSort)

@@ -47,13 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="incidenceVector.cs" />
-    <Compile Include="indexer.cs" />
+    <Compile Include="Indexer\incidenceVector.cs" />
+    <Compile Include="Indexer\indexer.cs" />
     <Compile Include="nearMatch.cs" />
     <Compile Include="WebCrawler\restrictionsCheck.cs" />
-    <Compile Include="stemmer.cs" />
-    <Compile Include="tokenizer.cs" />
-    <Compile Include="termPagePair.cs" />
+    <Compile Include="Indexer\stemmer.cs" />
+    <Compile Include="Indexer\tokenizer.cs" />
+    <Compile Include="Indexer\termPagePair.cs" />
     <Compile Include="WebCrawler\WebCrawler.cs" />
     <Compile Include="WebCrawler\webPage.cs" />
     <Compile Include="Program.cs" />

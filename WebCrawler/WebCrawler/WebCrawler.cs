@@ -10,10 +10,10 @@ namespace SearchEngine
 {
     class WebCrawler
     {
-        public List<string> crawlWebSites(Queue<Uri> listOfPages, string botName)
+        public List<KeyValuePair<string, string>> crawlWebSites(Queue<Uri> listOfPages, string botName)
         {
             List<robotRestriction> restrictions = new List<robotRestriction>();
-            List<string> pageContents = new List<string>();
+            List<KeyValuePair<string, string>> pageContents = new List<KeyValuePair<string, string>>();
             restrictionsCheck restrictionsChecker = new restrictionsCheck();
             nearMatch matchCheck = new nearMatch();
             List<webPage> webpages = new List<webPage>();
@@ -46,7 +46,7 @@ namespace SearchEngine
 
                     if (siteContent != "" && siteContent != null)
                     {
-                        pageContents.Add(siteContent);
+                        pageContents.Add(new KeyValuePair<string, string>(URL.ToString(),siteContent));
                         Console.WriteLine(pageContents.Count + " " + URL.ToString());
                     }
                 }
