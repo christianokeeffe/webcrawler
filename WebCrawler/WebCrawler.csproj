@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="nearMatch.cs" />
     <Compile Include="restrictionsCheck.cs" />
+    <Compile Include="tokenizer.cs" />
     <Compile Include="webPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
