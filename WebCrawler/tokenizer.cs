@@ -19,13 +19,12 @@ namespace SearchEngine
             string lowerCased = Regex.Replace(htmlRemoved, @"[^A-Za-z\s]", " ").ToLower();
             lowerCased = lowerCased.Replace('\r',' ').Replace('\n',' ').Replace('\t',' ');
             string[] tokens = lowerCased.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-
             string[] stopWordsRemoved = noStopWords(tokens);
 
             return stopWordsRemoved;
         }
 
-        internal static string[] noStopWords(string[] tokens)
+        private static string[] noStopWords(string[] tokens)
         {
             string[] stopWords = {"a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "arent", "as", "at", "be", "because", "been", "before",
             "being", "below", "between", "both", "but", "by", "cant", "cannot", "could", "couldnt", "did", "didnt", "do", "does", "doesnt", "doing", "dont", "down", "during", "each",
@@ -40,7 +39,7 @@ namespace SearchEngine
             return tokens;
         }
 
-        internal static string RemoveUnwantedTags(string data)
+        private static string RemoveUnwantedTags(string data)
         {
             var document = new HtmlDocument();
             document.LoadHtml(data);
