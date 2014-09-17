@@ -14,11 +14,7 @@ namespace WebCrawler
         static void Main(string[] args)
         {
             Queue<Uri> listOfPages = new Queue<Uri>();
-            listOfPages.Enqueue(new Uri("http://www.facebook.dk"));
-            listOfPages.Enqueue(new Uri("http://www.dr.dk"));
-            listOfPages.Enqueue(new Uri("http://www.tv2.dk"));
-            listOfPages.Enqueue(new Uri("http://www.version2.dk"));
-            listOfPages.Enqueue(new Uri("http://www.aau.dk"));
+            listOfPages.Enqueue(new Uri("http://dkdk.dk"));
             crawlWebSites(listOfPages, "OKEEFFE");
             Console.ReadKey();
         }
@@ -34,7 +30,7 @@ namespace WebCrawler
             List<string> usedSites = new List<string>();
             int startTime = restrictionsChecker.time();
             int badUri = 0;
-            while (pageContents.Count < 100 && listOfPages.Count != 0)
+            while (pageContents.Count < 10000 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
                 if (usedSites.IndexOf(URL.ToString()) == -1)
@@ -47,6 +43,7 @@ namespace WebCrawler
                     catch (UnauthorizedAccessException) { }
                     catch (NullReferenceException) { }
                     catch (WebException) { }
+                    catch(System.ArgumentException){}
                     catch (UriFormatException) { badUri++; }
                     if (siteContent == null)
                     {
@@ -60,6 +57,7 @@ namespace WebCrawler
                     if (siteContent != "" && siteContent != null)
                     {
                         pageContents.Add(siteContent);
+                        Console.WriteLine(pageContents.Count + URL.ToString());
                     }
                 }
                 else
@@ -83,7 +81,7 @@ namespace WebCrawler
                 if(restrictionsChecker.isAllowed(tempPage.restrictions, webPageUrl))
                 {
                     string returnValue = getPageContent(webPageUrl);
-                    //Console.WriteLine(webPageUrl);
+                    tempPage.lastVisited = restrictionsChecker.time();
                     List<string> stringsToAdd = getLinksFromString(returnValue);
                     foreach(string s in stringsToAdd)
                     {
