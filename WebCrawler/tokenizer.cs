@@ -18,8 +18,18 @@ namespace WebCrawler
             string htmlRemoved = RemoveUnwantedTags(stripped);
             string lowerCased = Regex.Replace(htmlRemoved, @"[^A-Za-z\s]", " ").ToLower();
             lowerCased = lowerCased.Replace('\r',' ').Replace('\n',' ').Replace('\t',' ');
-
             string[] tokens = lowerCased.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+
+            string[] stopWordsRemoved = noStopWords(tokens);
+
+            return stopWordsRemoved;
+        }
+
+        internal static string[] noStopWords(string[] tokens)
+        {
+            string[] stopWords = {"is", "a"};
+            foreach (string word in stopWords)
+                tokens = tokens.Where(w => w != word).ToArray();
             return tokens;
         }
 
