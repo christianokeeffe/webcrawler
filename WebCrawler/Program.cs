@@ -13,9 +13,9 @@ namespace WebCrawler
     {
         static void Main(string[] args)
         {
-            Queue<Uri> listOfPages = new Queue<Uri>();
-            listOfPages.Enqueue(new Uri("http://dkdk.dk"));
-            crawlWebSites(listOfPages, "OKEEFFE");
+            //Queue<Uri> listOfPages = new Queue<Uri>();
+            //listOfPages.Enqueue(new Uri("http://dkdk.dk"));
+            //crawlWebSites(listOfPages, "OKEEFFE");
             Console.ReadKey();
         }
 
