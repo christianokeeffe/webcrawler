@@ -8,12 +8,23 @@ namespace SearchEngine
 {
     class indexer
     {
-        public List<incidenceVector> getIndexTable(List<KeyValuePair<string, string>> inputList)
+        public Tuple<List<string>,List<incidenceVector>> getIndexTable(List<KeyValuePair<string, string>> inputList)
         {
+            List<termPagePair> termPageList = new List<termPagePair>();
+            List<string> pageIDList = new List<string>();
+            stemmer stem = new stemmer();
+            for (int i = 0; i < inputList.Count; i++ )
+            {
+                List<string> tokens = stem.stem(tokenizer.splitString(inputList[i].Value));
+                for(int j = 0; j < tokens.Count; j++)
+                {
+                    termPageList.Add(new termPagePair(tokens[j], i));
+                }
+                pageIDList.Add(inputList[i].Key);
+            }
             
-            /*termPageList = sortPairs(termPageList);
-            return pairsToVectorTable(termPageList);*/
-            return null;
+            termPageList = sortPairs(termPageList);
+            return new Tuple<List<string>,List<incidenceVector>>(pageIDList, pairsToVectorTable(termPageList));
         }
 
         private List<termPagePair> sortPairs(List<termPagePair> listToSort)

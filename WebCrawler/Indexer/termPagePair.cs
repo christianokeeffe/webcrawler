@@ -8,7 +8,13 @@ namespace SearchEngine
 {
     class termPagePair
     {
-        public string term;
-        public int pageID;
+        public string term = "";
+        public int pageID = -1;
+
+        public termPagePair(string term, int pageID)
+        {
+            this.term = term;
+            this.pageID = pageID;
+        }
     }
 }

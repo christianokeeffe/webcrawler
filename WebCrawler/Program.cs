@@ -15,10 +15,19 @@ namespace SearchEngine
         {
             WebCrawler webCrawler = new WebCrawler();
             Queue<Uri> listOfPages = new Queue<Uri>();
-            listOfPages.Enqueue(new Uri("http://www.december.com/html/demo/hello.html"));
+            listOfPages.Enqueue(new Uri("http://www.reddit.com"));
             List<KeyValuePair<string, string>> temp = webCrawler.crawlWebSites(listOfPages, "OKEEFFE");
-            
-            Console.ReadKey();
+            indexer index = new indexer();
+            Tuple<List<string>, List<incidenceVector>> list = index.getIndexTable(temp);
+            List<incidenceVector> templist = new List<incidenceVector>();
+            for (int i = 0; i < list.Item2.Count; i++ )
+            {
+                if(list.Item2[i].pageIDs.Count != 1)
+                {
+                    templist.Add(list.Item2[i]);
+                }
+            }
+                Console.ReadKey();
         }
     }
 }

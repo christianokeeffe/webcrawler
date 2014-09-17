@@ -9,7 +9,7 @@ namespace SearchEngine
 {
     class stemmer
     {
-        public List<string> stem (List<string> inputString)
+        public List<string> stem (string[] inputString)
         {
             List<string> returnString = new List<string>();
             IStemmer eng = new EnglishStemmer();

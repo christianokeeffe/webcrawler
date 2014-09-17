@@ -20,7 +20,7 @@ namespace SearchEngine
             List<string> usedSites = new List<string>();
             int startTime = restrictionsChecker.time();
             int badUri = 0;
-            while (pageContents.Count < 1 && listOfPages.Count != 0)
+            while (pageContents.Count < 100 && listOfPages.Count != 0)
             {
                 Uri URL = listOfPages.Dequeue();
                 if (usedSites.IndexOf(URL.ToString()) == -1)
