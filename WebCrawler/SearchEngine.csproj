@@ -50,14 +50,15 @@
     <Compile Include="incidenceVector.cs" />
     <Compile Include="indexer.cs" />
     <Compile Include="nearMatch.cs" />
-    <Compile Include="restrictionsCheck.cs" />
+    <Compile Include="WebCrawler\restrictionsCheck.cs" />
     <Compile Include="stemmer.cs" />
     <Compile Include="tokenizer.cs" />
     <Compile Include="termPagePair.cs" />
-    <Compile Include="webPage.cs" />
+    <Compile Include="WebCrawler\WebCrawler.cs" />
+    <Compile Include="WebCrawler\webPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="robotRestriction.cs" />
+    <Compile Include="WebCrawler\robotRestriction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
