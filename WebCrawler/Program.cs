@@ -18,9 +18,7 @@ namespace SearchEngine
             listOfPages.Enqueue(new Uri("http://9gag.com"));
             List<KeyValuePair<string, string>> temp = webCrawler.crawlWebSites(listOfPages, "OKEEFFE");
             indexer index = new indexer();
-            Console.ReadKey();
             Tuple<List<string>, List<incidenceVector>> list = index.getIndexTable(temp);
-            Console.WriteLine("NU");
             Console.ReadKey();
         }
     }
