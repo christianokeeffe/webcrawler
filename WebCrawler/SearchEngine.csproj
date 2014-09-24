@@ -50,7 +50,7 @@
     <Compile Include="Indexer\incidenceVector.cs" />
     <Compile Include="Indexer\indexer.cs" />
     <Compile Include="nearMatch.cs" />
-    <Compile Include="Ranker\tfStar.cs" />
+    <Compile Include="Ranker\documentFrequency.cs" />
     <Compile Include="WebCrawler\restrictionsCheck.cs" />
     <Compile Include="Indexer\stemmer.cs" />
     <Compile Include="Indexer\tokenizer.cs" />
