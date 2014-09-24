@@ -19,7 +19,19 @@ namespace SearchEngine
             List<KeyValuePair<string, string>> temp = webCrawler.crawlWebSites(listOfPages, "OKEEFFE");
             indexer index = new indexer();
             Tuple<List<string>, List<incidenceVector>> list = index.getIndexTable(temp);
-            Console.ReadKey();
+            bool exit = false;
+            while(!exit)
+            {
+                string q = Console.ReadLine();
+                if(q == "exit")
+                {
+                    exit = true;
+                }
+                else
+                {
+
+                }
+            }
         }
     }
 }
