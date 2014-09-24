@@ -8,6 +8,7 @@ namespace SearchEngine
 {
     class incidenceVector
     {
+        public float idf;
         public string term;
         public List<Posting> pageIDs = new List<Posting>();
 
