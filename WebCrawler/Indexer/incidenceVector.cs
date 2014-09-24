@@ -34,5 +34,10 @@ namespace SearchEngine
             this.pageID = pageID;
             pageCount = 0;
         }
+
+        public float getTfIdf(float idf)
+        {
+            return tfStar * idf;
+        }
     }
 }
