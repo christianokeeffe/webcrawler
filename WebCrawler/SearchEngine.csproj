@@ -50,6 +50,8 @@
     <Compile Include="Indexer\incidenceVector.cs" />
     <Compile Include="Indexer\indexer.cs" />
     <Compile Include="nearMatch.cs" />
+    <Compile Include="Ranker\termValue.cs" />
+    <Compile Include="Ranker\normalize.cs" />
     <Compile Include="WebCrawler\restrictionsCheck.cs" />
     <Compile Include="Indexer\stemmer.cs" />
     <Compile Include="Indexer\tokenizer.cs" />
@@ -64,9 +66,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ranker\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
