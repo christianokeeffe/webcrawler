@@ -24,6 +24,7 @@ namespace SearchEngine
 
     class Posting
     {
+        public float tfStar;
         public int pageID;
         public int pageCount;
 
