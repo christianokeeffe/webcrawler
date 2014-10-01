@@ -9,7 +9,8 @@ namespace SearchEngine.Ranker
     class termValue
     {
         public string term;
-        public double tfidf;
-        public double normtfidf;
+        public double tf;
+        public double normtf;
+        public int termID;
     }
 }

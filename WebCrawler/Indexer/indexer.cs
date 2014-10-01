@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SearchEngine.Ranker;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,10 @@ namespace SearchEngine
             }
             
             termPageList = sortPairs(termPageList);
-            return new Tuple<List<string>,List<incidenceVector>>(pageIDList, pairsToVectorTable(termPageList));
+            documentFrequency df = new documentFrequency();
+            List<incidenceVector> vectorTable = pairsToVectorTable(termPageList);
+            df.calculateTF(vectorTable);
+            return new Tuple<List<string>,List<incidenceVector>>(pageIDList, vectorTable);
         }
 
         private List<termPagePair> sortPairs(List<termPagePair> listToSort)

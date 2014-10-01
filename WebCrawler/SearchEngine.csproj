@@ -53,6 +53,7 @@
     <Compile Include="Ranker\termValue.cs" />
     <Compile Include="Ranker\normalize.cs" />
     <Compile Include="Ranker\documentFrequency.cs" />
+    <Compile Include="search.cs" />
     <Compile Include="WebCrawler\restrictionsCheck.cs" />
     <Compile Include="Indexer\stemmer.cs" />
     <Compile Include="Indexer\tokenizer.cs" />

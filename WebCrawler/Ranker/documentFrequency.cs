@@ -8,13 +8,11 @@ namespace SearchEngine.Ranker
 {
     class documentFrequency
     {
-        public void calculateTFAndIDF(List<string> documents, List<incidenceVector> listOfTerms) {
-            double pageCount = documents.Count();
+        public void calculateTF(List<incidenceVector> listOfTerms) {
             foreach (incidenceVector term in listOfTerms) {
-                term.idf = (float)Math.Log10(pageCount / term.pageIDs.Count());
                 foreach (Posting post in term.pageIDs) {
                     if (post.pageCount > 0) {
-                        post.tfStar = (1 + (float)Math.Log10(post.pageCount));
+                        post.tfStar = (1 + Math.Log10(post.pageCount));
                     } else {
                         post.tfStar = 0;
                     }

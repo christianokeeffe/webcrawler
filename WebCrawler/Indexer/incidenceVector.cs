@@ -8,7 +8,7 @@ namespace SearchEngine
 {
     class incidenceVector
     {
-        public float idf;
+        public double idf;
         public string term;
         public List<Posting> pageIDs = new List<Posting>();
 
@@ -25,7 +25,7 @@ namespace SearchEngine
 
     class Posting
     {
-        public float tfStar;
+        public double tfStar;
         public int pageID;
         public int pageCount;
 
@@ -35,7 +35,7 @@ namespace SearchEngine
             pageCount = 0;
         }
 
-        public float getTfIdf(float idf)
+        public double getTfIdf(double idf)
         {
             return tfStar * idf;
         }
