@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SearchEngine
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             WebCrawler webCrawler = new WebCrawler();
@@ -38,6 +40,7 @@ namespace SearchEngine
                     if (result.Count > 0)
                     {
                         Console.WriteLine("Best result: " + list.Item1[result[0].Key]);
+                        Clipboard.SetText(list.Item1[result[0].Key]);
                     }
                     else
                     {

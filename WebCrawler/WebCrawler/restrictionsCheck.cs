@@ -78,7 +78,7 @@ namespace SearchEngine
 
                 while (reader.Peek() >= 0)
                 {
-                    str = reader.ReadLine().ToLower();
+                    str = reader.ReadLine().Split('#')[0].ToLower();
 
                     if (str.StartsWith("user-agent:"))
                     {
